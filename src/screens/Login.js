@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -8,11 +8,15 @@ import {
   Text,
   Button,
   Image,
+  Alert,
 } from 'react-native';
 
 const img = require('../assets/logo.png');
 
-const Login = () => {
+const Login = props => {
+  const [email, setEmail] = useState(props.email);
+  const [password, setPassword] = useState('');
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -23,15 +27,24 @@ const Login = () => {
           <TextInput
             style={styles.input}
             placeholder="Email"
+            value={email}
             keyboardType={'email-address'}
             autoCapitalize="none"
+            onChangeText={text => setEmail(text)}
           />
           <TextInput
             style={styles.input}
             placeholder="Password"
             secureTextEntry={true}
+            value={password}
+            onChangeText={password => setPassword(password)}
           />
-          <Button title="Sign In" />
+          <Button
+            title="Sign In"
+            onPress={() =>
+              Alert.alert(`Email: ${email}\nPassword: ${password}`)
+            }
+          />
           <View style={styles.textConteiner}>
             <Text>Not a member? Let's </Text>
             <Text style={styles.textRegister}>Register</Text>
