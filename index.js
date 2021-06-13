@@ -1,12 +1,17 @@
 import React from 'react';
-import {AppRegistry} from 'react-native';
-import App from './src/screens/App';
-import Login from './src/screens/Login';
-import Register from './src/screens/Register';
+import {AppRegistry, SafeAreaView} from 'react-native';
+import Route from './src/routes/Route';
 import {name as appName} from './app.json';
+import {NavigationContainer} from '@react-navigation/native';
 
-const Index = () => {
-  return <Login email="lucas@robaert.com" />;
+const wrappedRoutes = () => {
+  return (
+    <NavigationContainer>
+      <SafeAreaView style={{flex: 1}}>
+        <Route />
+      </SafeAreaView>
+    </NavigationContainer>
+  );
 };
 
-AppRegistry.registerComponent(appName, () => Register);
+AppRegistry.registerComponent(appName, () => wrappedRoutes);
