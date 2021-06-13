@@ -10,6 +10,7 @@ import {
   Image,
   Alert,
 } from 'react-native';
+import {CommonActions} from '@react-navigation/native';
 
 import {signInOnFirebaseAsync} from '../services/FirebaseApi';
 
@@ -23,6 +24,12 @@ const Login = props => {
     try {
       const user = await signInOnFirebaseAsync(email, password);
       Alert.alert('User Authenticated', `User ${user.user.email}`);
+      props.navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{name: 'TaskList'}],
+        }),
+      );
     } catch (error) {
       Alert.alert('Login Failed', error.message);
     }
