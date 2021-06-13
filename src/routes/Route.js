@@ -1,5 +1,12 @@
 import {createStackNavigator} from '@react-navigation/stack';
-import {App, Login, Register, TodoTasks, DoneTasks} from '../screens/Screens';
+import {
+  App,
+  Login,
+  Register,
+  TodoTasks,
+  DoneTasks,
+  Task,
+} from '../screens/Screens';
 import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
@@ -17,6 +24,7 @@ const Routes = () => {
       />
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="TaskList" component={TaskTab} />
+      <Stack.Screen name="Task" component={Task} />
     </Stack.Navigator>
   );
 };
