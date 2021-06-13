@@ -11,11 +11,22 @@ import {
   Alert,
 } from 'react-native';
 
+import {signInOnFirebaseAsync} from '../services/FirebaseApi';
+
 const img = require('../assets/logo.png');
 
 const Login = props => {
   const [email, setEmail] = useState(props.email);
   const [password, setPassword] = useState('');
+
+  const signInAsync = async () => {
+    try {
+      const user = await signInOnFirebaseAsync(email, password);
+      Alert.alert('User Authenticated', `User ${user.user.email}`);
+    } catch (error) {
+      Alert.alert('Login Failed', error.message);
+    }
+  };
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -38,10 +49,7 @@ const Login = props => {
           value={password}
           onChangeText={password => setPassword(password)}
         />
-        <Button
-          title="Sign In"
-          onPress={() => Alert.alert(`Email: ${email}\nPassword: ${password}`)}
-        />
+        <Button title="Sign In" onPress={() => signInAsync()} />
         <View style={styles.textConteiner}>
           <Text>Not a member? Let's </Text>
           <Text
