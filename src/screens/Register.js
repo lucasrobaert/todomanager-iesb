@@ -10,6 +10,8 @@ import {
   Alert,
 } from 'react-native';
 
+import {createUserOnFirebaseAsync} from '../services/FirebaseApi';
+
 const img = require('../assets/logo.png');
 
 export default class Register extends Component {
@@ -21,6 +23,30 @@ export default class Register extends Component {
     email: '',
     password: '',
   };
+
+  async _createUserAsync() {
+    console.log(this.state.email);
+    try {
+      const user = await createUserOnFirebaseAsync(
+        this.state.email,
+        this.state.password,
+      );
+      Alert.alert(
+        'User Created!',
+        `User ${user.email} has successfully registered`,
+        [
+          {
+            text: 'OK',
+            onPress: () => {
+              this.props.navigation.goBack();
+            },
+          },
+        ],
+      );
+    } catch (error) {
+      Alert.alert('Create User Failed', error.message);
+    }
+  }
 
   render() {
     return (
@@ -45,10 +71,9 @@ export default class Register extends Component {
           />
           <Button
             title="Register User"
-            onPress={() =>
-              Alert.alert(`Email: ${this.state.email}\n Password: 
-                        ${this.state.password}`)
-            }
+            onPress={() => {
+              this._createUserAsync();
+            }}
           />
         </View>
       </KeyboardAvoidingView>

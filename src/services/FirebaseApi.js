@@ -10,3 +10,11 @@ const config = {
 };
 
 export const initializeFirebaseApi = () => firebase.initializeApp(config);
+
+export const createUserOnFirebaseAsync = async (email, password) => {
+  const {user} = await firebase
+    .auth()
+    .createUserWithEmailAndPassword(email, password);
+
+  return user;
+};
