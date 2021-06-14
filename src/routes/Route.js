@@ -31,7 +31,12 @@ const Routes = () => {
 
 export const TaskTab = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      tabBarOptions={{
+        activeTintColor: 'tomato',
+        inactiveTintColor: 'gray',
+        iconStyle: {width: 20, height: 20},
+      }}>
       <Tab.Screen name="To Do" component={TodoTasks} />
       <Tab.Screen name="Done" component={DoneTasks} />
     </Tab.Navigator>

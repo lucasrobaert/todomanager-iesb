@@ -49,7 +49,22 @@ export const writeTaskOnFirebaseAsync = async task => {
 
   var taskReference = firebase.database().ref(user.uid);
 
-  const key = taskReference.child('tasks').push.key;
+  const key = taskReference.child('tasks').push().key;
 
-  return await taskReference.child('tasks${key}').update(task);
+  return await taskReference.child(`tasks/${key}`).update(task);
+};
+
+export const readTasksFromFirebaseAsync = async listener => {
+  const user = await currentFirebaseUser();
+  var taskReference = firebase.database().ref(user.uid).child('tasks');
+
+  taskReference.on('value', snapshot => {
+    var tasks = [];
+    snapshot.forEach(function (element) {
+      var task = element.val();
+      task.key = element.key;
+      tasks.push(task);
+    });
+    listener(tasks);
+  });
 };

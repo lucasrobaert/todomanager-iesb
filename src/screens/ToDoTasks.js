@@ -1,10 +1,29 @@
 import React, {Component} from 'react';
 import {Image, StyleSheet, View, TouchableOpacity} from 'react-native';
 
+import {TaskListView} from '../components/Components';
+import {readTasksFromFirebaseAsync} from '../services/FirebaseApi';
+
 const imgCheckList = require('../assets/checklist.png');
 const imgPlus = require('../assets/plus.jpeg');
 
 export default class TodoTasks extends Component {
+  state = {
+    tasks: [],
+  };
+
+  componentDidMount() {
+    readTasksFromFirebaseAsync(this._fetchTasks.bind(this));
+    console.log('Passou no didmount  ' + this.state.tasks);
+  }
+
+  _fetchTasks(tasks) {
+    const tasksToDo = tasks.filter(t => !t.isDone);
+    console.log(tasksToDo);
+    this.setState({tasks: tasksToDo});
+    console.log(this.state.tasks);
+  }
+
   _goToTask() {
     this.props.navigation.navigate('Task');
   }
@@ -12,6 +31,7 @@ export default class TodoTasks extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <TaskListView tasks={this.state.tasks} />
         <TouchableOpacity
           style={styles.floatButton}
           onPress={() => this._goToTask()}>
