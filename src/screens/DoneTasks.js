@@ -24,7 +24,10 @@ export default class DoneTasks extends Component {
   render() {
     return (
       <View style={styles.conteiner}>
-        <TaskListView tasks={this.state.tasks} />
+        <TaskListView
+          tasks={this.state.tasks}
+          navigation={this.props.navigation}
+        />
       </View>
     );
   }

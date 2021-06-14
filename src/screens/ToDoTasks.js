@@ -29,7 +29,10 @@ export default class TodoTasks extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TaskListView tasks={this.state.tasks} />
+        <TaskListView
+          tasks={this.state.tasks}
+          navigation={this.props.navigation}
+        />
         <TouchableOpacity
           style={styles.floatButton}
           onPress={() => this._goToTask()}>
