@@ -19,9 +19,7 @@ export default class TodoTasks extends Component {
 
   _fetchTasks(tasks) {
     const tasksToDo = tasks.filter(t => !t.isDone);
-    console.log(tasksToDo);
     this.setState({tasks: tasksToDo});
-    console.log(this.state.tasks);
   }
 
   _goToTask() {
